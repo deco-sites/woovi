@@ -6,6 +6,7 @@ import Text from "$store/components/ui/Text.tsx";
 import { useUI } from "../../sdk/useUI.ts";
 import CartItem from "./CartItem.tsx";
 import Coupon from "./Coupon.tsx";
+import PayWithPixButton from "../woovi/PayWithPixButton.tsx";
 
 const CHECKOUT_URL =
   "https://bravtexfashionstore.vtexcommercestable.com.br/checkout";
@@ -24,6 +25,8 @@ function Cart() {
   if (cart.value === null) {
     return null;
   }
+
+  console.log({ cart, loading, total });
 
   // Empty State
   if (isCartEmpty) {
@@ -85,19 +88,7 @@ function Cart() {
           </div>
         )}
         <div class="p-4">
-          <a
-            class="inline-block w-full"
-            target="_blank"
-            href={`${CHECKOUT_URL}?orderFormId=${cart.value!.orderFormId}`}
-          >
-            <Button
-              data-deco="buy-button"
-              class="w-full"
-              disabled={loading.value || cart.value.items.length === 0}
-            >
-              Finalizar Compra
-            </Button>
-          </a>
+          <PayWithPixButton value={cart.value.value} />
         </div>
       </footer>
     </>
